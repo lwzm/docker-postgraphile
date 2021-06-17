@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# https://stackoverflow.com/questions/911168/how-to-detect-if-my-shell-script-is-running-through-a-pipe
+if [ -z "$PG" ]; then
+	echo 'please set env PG. Examples: db, postgres:///db, postgres://domain/, postgres://user:password@domain:port/db?ssl=true'
+	exit 1
+fi
+
+exec ./cli.js --watch --dynamic-json --enhance-graphiql --no-setof-functions-contain-nulls --disable-query-log --port 80 \
+	--append-plugins @graphile-contrib/pg-simplify-inflector,@graphile-contrib/pg-many-to-many,postgraphile-plugin-connection-filter \
+	--connection "$PG" "$@"
