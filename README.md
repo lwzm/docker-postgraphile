@@ -3,5 +3,5 @@
 Copy of `graphile/postgraphile`, with additional `filter` plugin.
 
 ```
-docker run lwzm/postgraphile -c postgres://postgres:xxxx@postgres/
+docker run -e PG=postgres://postgres:xxxx@postgres/ lwzm/postgraphile
 ```
