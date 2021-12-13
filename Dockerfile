@@ -1,7 +1,7 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 EXPOSE 80
-
+ENV NODE_ENV=production
 ENTRYPOINT [ "./entrypoint" ]
 
 RUN yarn global add --production=true \
