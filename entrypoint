@@ -1,18 +1,11 @@
 #!/bin/sh
 
-if [ -z "$PG" ]; then
-	echo 'please set env PG. Examples: db, postgres:///db, postgres://domain/, postgres://user:password@domain:port/db?ssl=true'
-	exit 1
-fi
-
 exec postgraphile \
-	--connection "$PG" \
+	--append-plugins @graphile-contrib/pg-simplify-inflector,@graphile-contrib/pg-many-to-many,postgraphile-plugin-connection-filter \
 	--dynamic-json \
 	--enhance-graphiql \
 	--no-setof-functions-contain-nulls \
 	--disable-query-log \
 	--simple-collections both \
-	--host 0.0.0.0 \
-	--port 80 \
-	--append-plugins @graphile-contrib/pg-simplify-inflector,@graphile-contrib/pg-many-to-many,postgraphile-plugin-connection-filter \
+	--connection postgres://postgres@localhost/postgres \
 	"$@"
